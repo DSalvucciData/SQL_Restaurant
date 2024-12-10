@@ -902,41 +902,18 @@ id_plato, id_pedido, nombre_plato, precio
 29- Elimina el cliente con id_cliente = 3 y todos sus pedidos asociados.
 
 ```sql
--- Mostrar la estructura actual de la tabla 'pedidos' para verificar las claves foráneas existentes
-SHOW CREATE TABLE pedidos;
+DELETE FROM platos 
+WHERE id_pedido IN (SELECT id_pedido FROM pedidos WHERE id_cliente = 3);
 
--- Eliminar la clave foránea existente en la tabla 'pedidos' que referencia a la tabla 'clientes'
-ALTER TABLE pedidos
-DROP FOREIGN KEY pedidos_ibfk_1;
-
--- Eliminar la clave foránea existente en la tabla 'platos' que referencia a la tabla 'pedidos'
-ALTER TABLE platos
-DROP FOREIGN KEY platos_ibfk_1;
-
--- Volver a agregar la clave foránea en la tabla 'pedidos', esta vez con 'ON DELETE CASCADE',
--- lo que asegura que, si se elimina un cliente, se eliminarán automáticamente los pedidos asociados.
-ALTER TABLE pedidos
-ADD CONSTRAINT pedidos_ibfk_1
-FOREIGN KEY (id_cliente)
-REFERENCES clientes (id_cliente)
-ON DELETE CASCADE;
-
--- Volver a agregar la clave foránea en la tabla 'platos', esta vez con 'ON DELETE CASCADE',
--- lo que asegura que, si se elimina un pedido, se eliminarán automáticamente los platos asociados.
-ALTER TABLE platos
-ADD CONSTRAINT platos_ibfk_1
-FOREIGN KEY (id_pedido)
-REFERENCES pedidos (id_pedido)
-ON DELETE CASCADE;
-
--- Eliminar al cliente con id_cliente = 3 y sus pedidos y platos asociados,
--- gracias a las claves foráneas con 'ON DELETE CASCADE' que eliminarán automáticamente los registros relacionados.
-DELETE FROM clientes
+DELETE FROM pedidos 
 WHERE id_cliente = 3;
 
+DELETE FROM clientes WHERE id_cliente = 3;
 ```
+
 ```sql
 -- Verifico cada tabla que se elimino correctamente el cliente 3 y todos sus pedidos
+
 SELECT *
 FROM clientes;
 
@@ -945,7 +922,9 @@ FROM pedidos;
 
 SELECT *
 FROM platos;
+
 ```
+
 ```sql
 id_cliente, nombre
 '1', 'Ana Gómez'

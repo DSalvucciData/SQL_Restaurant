@@ -14,6 +14,7 @@ VALUES
 ('Carla Torres')
 ;
 
+SELECT * FROM clientes;
 
 
 CREATE TABLE pedidos (
@@ -33,6 +34,8 @@ VALUES
     (2, '2024-11-29'),
     (3, '2024-11-30');
 
+
+SELECT * FROM pedidos;
 
 CREATE TABLE platos (
     id_plato INT AUTO_INCREMENT,
@@ -54,3 +57,4 @@ VALUES
     (103, 'Tarta de queso', 6.50)
     ;
     
+SELECT * FROM platos;
